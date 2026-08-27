@@ -1,0 +1,61 @@
+{
+  "rules": {
+    /* ── Users: each user can ONLY read/write their own data; only the main (super) admin can view all users ── */
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || (root.child('admins/' + auth.uid).val() === true && auth.token.email === 'aarif.box8@gmail.com'))",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    /* ── Admins: only real admins manage; super admin self-registers via verified email claim ── */
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && (root.child('admins/' + auth.uid).val() === true || auth.token.email === 'aarif.box8@gmail.com')",
+        ".write": "auth != null && (root.child('admins/' + auth.uid).val() === true || (auth.uid === $uid && auth.token.email === 'aarif.box8@gmail.com'))"
+      }
+    },
+
+    /* ── Finance: user sees/creates only their own entries; admins see all ── */
+    "finances": {
+      "funds": {
+        "$entry": {
+          ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins/' + auth.uid).val() === true)",
+          ".write": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins/' + auth.uid).val() === true) && (newData.val() === null || newData.child('userId').val() === auth.uid || root.child('admins/' + auth.uid).val() === true)"
+        }
+      },
+      "expenses": {
+        "$entry": {
+          ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins/' + auth.uid).val() === true)",
+          ".write": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins/' + auth.uid).val() === true) && (newData.val() === null || newData.child('userId').val() === auth.uid || root.child('admins/' + auth.uid).val() === true)"
+        }
+      }
+    },
+
+    /* ── Mosque-wide shared content: signed-in users read, admins write ── */
+    "events": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins/' + auth.uid).val() === true"
+    },
+    "gallery": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins/' + auth.uid).val() === true"
+    },
+    "timings": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins/' + auth.uid).val() === true"
+    },
+    "announcements": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins/' + auth.uid).val() === true"
+    },
+    "notifications": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins/' + auth.uid).val() === true"
+    },
+    "settings": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins/' + auth.uid).val() === true"
+    }
+  }
+}

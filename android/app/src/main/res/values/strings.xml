@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mosque Hub</string>
+    <string name="title_activity_main">Mosque Hub</string>
+    <string name="package_name">com.mosquehub.putki</string>
+    <string name="custom_url_scheme">com.mosquehub.putki</string>
+    <string name="server_client_id">304451817956-f8d22vskk3i4jfq0u4i4p3pkkq0e9j1c.apps.googleusercontent.com</string>
+</resources>

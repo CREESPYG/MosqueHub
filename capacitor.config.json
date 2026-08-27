@@ -1,0 +1,37 @@
+{
+  "appId": "com.mosquehub.putki",
+  "appName": "Mosque Hub",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "launchAutoHide": true,
+      "backgroundColor": "#047857",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#047857",
+      "overlaysWebView": false
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_mosque",
+      "iconColor": "#047857",
+      "sound": "beep.wav"
+    },
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "304451817956-f8d22vskk3i4jfq0u4i4p3pkkq0e9j1c.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#059669"/>
+      <stop offset="1" stop-color="#064e3b"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="url(#bg)"/>
+  <!-- minarets -->
+  <rect x="7" y="24" width="5" height="24" rx="2.5" fill="#ffffff"/>
+  <circle cx="9.5" cy="22" r="2.6" fill="#ffffff"/>
+  <rect x="52" y="24" width="5" height="24" rx="2.5" fill="#ffffff"/>
+  <circle cx="56.5" cy="22" r="2.6" fill="#ffffff"/>
+  <!-- main dome -->
+  <path d="M13 42 A19 19 0 0 1 51 42 Z" fill="#ffffff"/>
+  <!-- base -->
+  <rect x="14" y="42" width="36" height="6" rx="2.5" fill="#ffffff"/>
+  <!-- finial + crescent -->
+  <line x1="32" y1="24" x2="32" y2="19" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="32" cy="17" r="2.4" fill="#ffffff"/>
+  <path d="M33.5 13.5 A4 4 0 1 0 37 17.5 A3.2 3.2 0 0 1 33.5 13.5 Z" fill="#ffffff"/>
+</svg>
