@@ -1,7 +1,7 @@
 # 🕌 Mosque Hub (Masjid Al-Putki)
 
-[![Version](https://img.shields.io/badge/version-1.0.3-emerald.svg)](https://github.com/CREESPYG/MosqueHub)
-[![Build](https://img.shields.io/badge/build-3-blue.svg)](https://github.com/CREESPYG/MosqueHub)
+[![Version](https://img.shields.io/badge/version-1.0.4-emerald.svg)](https://github.com/CREESPYG/MosqueHub)
+[![Build](https://img.shields.io/badge/build-4-blue.svg)](https://github.com/CREESPYG/MosqueHub)
 [![Platform](https://img.shields.io/badge/platform-Web%20%7C%20Android%20APK-teal.svg)](https://github.com/CREESPYG/MosqueHub)
 
 A modern, high-performance web and mobile application for mosque administration, real-time Azan and Iqamah schedules, interactive Islamic Civil (Hijri) dual calendar, event tracking, community announcements, and background notifications.
@@ -36,9 +36,9 @@ A modern, high-performance web and mobile application for mosque administration,
 ## 📁 Repository Structure
 
 ```
-├── And APK/                   # Android APK Releases (v1.0.3 build 3)
-│   ├── MosqueHub-v1.0.3-build3.apk
-│   └── MosqueHub-v1.0.3-build3-debug.apk
+├── And APK/                   # Android APK Releases (v1.0.4 build 4)
+│   ├── MosqueHub-v1.0.4-build4.apk
+│   └── MosqueHub-v1.0.4-build4-debug.apk
 ├── Web-Build/                 # Deployable static web build (drop-in for Netlify/Vercel/Firebase)
 │   ├── index.html
 │   ├── 404.html
@@ -71,9 +71,9 @@ Deploy the `Web-Build/` folder directly to any static hosting provider:
 ## 📱 Android APK Installation & Download
 
 Download and install the latest release directly from GitHub Releases:
-- **Direct Download (GitHub Releases)**: **[Download MosqueHub-v1.0.3-build3.apk](https://github.com/CREESPYG/MosqueHub/releases/download/v1.0.3/MosqueHub-v1.0.3-build3.apk)**
-- **Release Page**: **[Mosque Hub v1.0.3 Release Notes & Assets](https://github.com/CREESPYG/MosqueHub/releases/tag/v1.0.3)**
-- **Local File**: `And APK/MosqueHub-v1.0.3-build3.apk`
+- **Direct Download (GitHub Releases)**: **[Download MosqueHub-v1.0.4-build4.apk](https://github.com/CREESPYG/MosqueHub/releases/download/v1.0.4/MosqueHub-v1.0.4-build4.apk)**
+- **Release Page**: **[Mosque Hub v1.0.4 Release Notes & Assets](https://github.com/CREESPYG/MosqueHub/releases/tag/v1.0.4)**
+- **Local File**: `And APK/MosqueHub-v1.0.4-build4.apk`
 
 ---
 

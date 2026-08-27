@@ -5,8 +5,8 @@ import UpdateModal from "../components/update/UpdateModal";
 
 const UpdateContext = createContext(null);
 
-export const CURRENT_APP_VERSION = "1.0.3";
-export const CURRENT_VERSION_CODE = 3;
+export const CURRENT_APP_VERSION = "1.0.4";
+export const CURRENT_VERSION_CODE = 4;
 
 export function UpdateProvider({ children }) {
   const [remoteUpdate, setRemoteUpdate] = useState(null);

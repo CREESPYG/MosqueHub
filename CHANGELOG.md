@@ -4,6 +4,16 @@ All notable changes to the Mosque Hub project are documented in this file.
 
 ---
 
+## [1.0.4] — Build 4 (2026-08-28)
+
+### 🚀 Page Scrolling & Touch Momentum Fixes
+- **Natural Document Momentum Scrolling**: Removed conflicting nested overflow constraints across `html` and `body` that previously caused touch-scroll locking and jitter on mobile WebViews.
+- **Bottom Navigation Clearance**: Adjusted main page scroll padding to `pb-[calc(6.5rem+env(safe-area-inset-bottom,0px))]`, preventing any cards or buttons from being blocked by the raised bottom navigation bar.
+- **Harmonized Breakpoints**: Synchronized `SliceBottomNav` (`lg:hidden`) with desktop sidebar (`hidden lg:flex`) for consistent navigation across mobile, tablets, and desktop.
+- **Version Bump**: Updated version tag to `v1.0.4` and build code to `4`.
+
+---
+
 ## [1.0.3] — Build 3 (2026-08-28)
 
 ### 🚀 Performance & Zero-Lag Architecture
