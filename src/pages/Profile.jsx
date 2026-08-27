@@ -247,7 +247,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 animate-slide-up">
+    <div className="max-w-2xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6 animate-slide-up">
       {/* ── Hero profile card ── */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-800 via-emerald-700 to-slate-900 text-white shadow-card-hover">
         <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/5" />

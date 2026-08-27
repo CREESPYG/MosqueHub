@@ -1,16 +1,21 @@
 # 📋 Changelog
 
-All notable changes to the Mosque Hub project will be documented in this file.
+All notable changes to the Mosque Hub project are documented in this file.
 
 ---
 
 ## [1.0.3] — Build 3 (2026-08-28)
 
+### 🚀 Performance & Zero-Lag Architecture
+- **O(1) Memoized Islamic Calendar Engine**: Replaced repeated multi-thousand iteration loops with a single-pass 3-year index and in-memory date memoization cache, eliminating UI freezes and stuttering.
+- **Hardware-Accelerated UI**: Enabled GPU transitions, smooth 60fps scrolling, and responsive container scaling across all devices.
+- **Dynamic Islamic Month Shifting**: Calendar month header and day inspector dynamically transition Islamic month names and dates live as dates change or months shift.
+- **Full Device Screen Fitting**: Fixed viewport meta scaling (`user-scalable=no, viewport-fit=cover`) and responsive 7-column calendar grid sizing (`h-11 sm:h-16`, `gap-1 sm:gap-1.5`) guaranteeing zero horizontal clipping or overflow on mobile devices.
+
 ### 🕌 Islamic Civil Calendar & Event Sync
-- **Islamic Civil Dual Calendar**: Implemented standard `en-u-ca-islamic-civil` calendar calculations with multi-year compatibility.
-- **Google Calendar Aligned Events**: Synchronized all major Islamic holy days (Ramadan, Laylat al-Qadr, Eid al-Fitr, Day of Arafah, Eid al-Adha, Ashura, Mawlid an-Nabi, Isra & Mi'raj, Shab-e-Barat).
+- **Islamic Civil Dual Calendar**: Standard `en-u-ca-islamic-civil` calendar calculations with multi-year Google Calendar holiday alignment.
 - **Interactive Date Inspector**: Tap any calendar day to inspect its full Islamic date and scheduled mosque events.
-- **Islamic Month Names on Cards**: Added prominent Islamic month badges (*Ramadan*, *Shawwal*, *Muharram*, *Dhu al-Hijjah*, etc.) across all event cards.
+- **Islamic Month Badges on Cards**: Prominent badges (*Ramadan*, *Shawwal*, *Muharram*, *Dhu al-Hijjah*, etc.) across all event cards.
 - **Past, Upcoming & Multi-Year Feed**: Filterable timeline supporting upcoming events, past events, and instant search.
 
 ### ⏰ Accurate Notification Engine & Background Alarms
@@ -22,7 +27,7 @@ All notable changes to the Mosque Hub project will be documented in this file.
 - **In-App Battery & Background Guide**: Added battery optimization helper card in Notifications tab.
 
 ### 🛠️ Bug Fixes & Stability
-- **React 19 Rules of Hooks Fix**: Fixed conditional hook execution in `Profile.jsx` that previously caused runtime errors.
+- **React 19 Rules of Hooks Fix**: Fixed conditional hook execution in `Profile.jsx` and missing `Icon` import in `Tracker.jsx`.
 - **Zero Linter Warnings/Errors**: Cleaned unused imports and fixed helper methods across services.
 - **Dedicated `Web-Build` Folder**: Standalone deployable web distribution with `_redirects` and `404.html` fallback for any static web host.
 

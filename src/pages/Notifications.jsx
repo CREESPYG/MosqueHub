@@ -118,7 +118,7 @@ export default function Notifications() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 animate-slide-up">
+    <div className="max-w-2xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6 animate-slide-up">
 
       {/* ── Page Header ── */}
       <div className="flex items-center justify-between">

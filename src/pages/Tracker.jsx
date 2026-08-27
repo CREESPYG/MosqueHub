@@ -7,10 +7,10 @@ import {
   CheckCircle2,
   Circle,
   Flame,
-  LogIn,
   BarChart3,
   CalendarCheck2,
 } from "lucide-react";
+import Icon from "../components/ui/Icon";
 
 const PRAYERS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
 
@@ -115,7 +115,7 @@ export default function Tracker() {
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-2xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6">
       {/* Header */}
       <div className="animate-slide-up">
         <div className="flex items-center gap-2 mb-1">

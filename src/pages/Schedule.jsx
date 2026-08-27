@@ -56,9 +56,11 @@ export default function Schedule() {
     return islamicCalendarService.getMonthCalendarGrid(
       calendarDate.getFullYear(),
       calendarDate.getMonth(),
-      mosqueEvents
+      mosqueEvents,
+      0,
+      selectedDate
     );
-  }, [calendarDate, mosqueEvents]);
+  }, [calendarDate, mosqueEvents, selectedDate]);
 
   // Selected date's events & Hijri details
   const selectedDateDetails = useMemo(() => {
@@ -87,7 +89,7 @@ export default function Schedule() {
   }, [mosqueEvents, eventFilter, eventSearch]);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 animate-slide-up">
+    <div className="max-w-2xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6 animate-slide-up">
       {/* ── Page Header ── */}
       <div className="space-y-1">
         <div className="flex items-center justify-between flex-wrap gap-2">
@@ -275,24 +277,36 @@ export default function Schedule() {
       {activeTab === "calendar" && (
         <div className="space-y-4">
           {/* Calendar Month Header */}
-          <div className="card flex items-center justify-between py-3 px-4 shadow-sm border border-slate-200">
+          <div className="card flex items-center justify-between py-3 px-3 sm:px-4 shadow-sm border border-slate-200">
             <button
-              onClick={() => setCalendarDate(subMonths(calendarDate, 1))}
+              onClick={() => {
+                const prev = subMonths(calendarDate, 1);
+                setCalendarDate(prev);
+                setSelectedDate(prev);
+              }}
               className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 active:scale-90 transition-all cursor-pointer"
               aria-label="Previous month"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <div className="text-center">
-              <p className="text-base font-extrabold text-slate-800">
+            <div className="text-center px-1">
+              <p className="text-sm sm:text-base font-extrabold text-slate-800 leading-tight">
                 {format(calendarDate, "MMMM yyyy")}
               </p>
-              <p className="text-xs text-emerald-700 font-bold">
-                {monthGrid.hijriSpanTitle}
-              </p>
+              <div className="flex items-center justify-center gap-1.5 mt-0.5 flex-wrap">
+                <span className="text-[11px] sm:text-xs text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  🌙 {selectedDate && selectedDate.getMonth() === calendarDate.getMonth() 
+                       ? selectedDateDetails?.hijri?.formatted 
+                       : monthGrid.hijriSpanTitle}
+                </span>
+              </div>
             </div>
             <button
-              onClick={() => setCalendarDate(addMonths(calendarDate, 1))}
+              onClick={() => {
+                const next = addMonths(calendarDate, 1);
+                setCalendarDate(next);
+                setSelectedDate(next);
+              }}
               className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 active:scale-90 transition-all cursor-pointer"
               aria-label="Next month"
             >
@@ -301,17 +315,17 @@ export default function Schedule() {
           </div>
 
           {/* Calendar Grid */}
-          <div className="card p-3 shadow-sm border border-slate-200">
-            <p className="text-[11px] text-slate-400 font-medium mb-2 text-center">
-              Tap any date to inspect full Islamic date and scheduled events
+          <div className="card p-2.5 sm:p-3.5 shadow-sm border border-slate-200 w-full overflow-hidden">
+            <p className="text-[10.5px] sm:text-[11px] text-slate-400 font-medium mb-2 text-center">
+              Tap any date to inspect Islamic month details and scheduled events
             </p>
 
             {/* Days of Week Header */}
-            <div className="grid grid-cols-7 gap-1 text-center mb-2 pb-2 border-b border-slate-100">
+            <div className="grid grid-cols-7 gap-1 text-center mb-1.5 pb-1.5 border-b border-slate-100">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((dayName, idx) => (
                 <span
                   key={dayName}
-                  className={`text-[11px] font-bold uppercase tracking-wider ${
+                  className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${
                     idx === 5 ? "text-emerald-700 font-extrabold" : "text-slate-400"
                   }`}
                 >
@@ -321,10 +335,10 @@ export default function Schedule() {
             </div>
 
             {/* Dates Grid */}
-            <div className="grid grid-cols-7 gap-1.5">
+            <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
               {monthGrid.days.map((dayObj, i) => {
                 if (!dayObj) {
-                  return <div key={`empty-${i}`} className="h-14 sm:h-16 rounded-xl bg-slate-50/40" />;
+                  return <div key={`empty-${i}`} className="h-11 sm:h-16 rounded-lg sm:rounded-xl bg-slate-50/40" />;
                 }
 
                 const isSelected =
@@ -336,7 +350,7 @@ export default function Schedule() {
                     key={`day-${dayObj.gregorianDay}`}
                     type="button"
                     onClick={() => setSelectedDate(dayObj.date)}
-                    className={`h-14 sm:h-16 rounded-xl p-1.5 flex flex-col justify-between border transition-all text-left relative cursor-pointer active:scale-95 ${
+                    className={`h-11 sm:h-16 rounded-lg sm:rounded-xl p-1 sm:p-1.5 flex flex-col justify-between border transition-all text-left relative cursor-pointer active:scale-95 ${
                       isSelected
                         ? "bg-emerald-700 text-white border-emerald-800 shadow-md ring-2 ring-emerald-400"
                         : dayObj.isToday
@@ -350,14 +364,14 @@ export default function Schedule() {
                   >
                     <div className="flex items-center justify-between w-full">
                       <span
-                        className={`text-xs font-bold ${
+                        className={`text-[11px] sm:text-xs font-bold ${
                           isSelected || dayObj.isToday ? "text-white" : "text-slate-800"
                         }`}
                       >
                         {dayObj.gregorianDay}
                       </span>
                       <span
-                        className={`text-[10px] font-semibold ${
+                        className={`text-[9px] sm:text-[10px] font-semibold ${
                           isSelected || dayObj.isToday
                             ? "text-emerald-100"
                             : dayObj.isFriday
@@ -371,7 +385,7 @@ export default function Schedule() {
 
                     {dayObj.event && (
                       <div
-                        className={`text-[8px] sm:text-[9px] font-bold px-1 py-0.5 rounded truncate w-full ${
+                        className={`text-[7.5px] sm:text-[9px] font-bold px-0.5 sm:px-1 py-0.5 rounded truncate w-full ${
                           isSelected || dayObj.isToday
                             ? "bg-white/20 text-white"
                             : dayObj.isMosqueEvent

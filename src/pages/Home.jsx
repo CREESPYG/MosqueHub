@@ -247,7 +247,7 @@ export default function Home() {
     : ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha", "Jummah"];
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-2xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6">
       {/* ── Date Header ── */}
       <div className="animate-slide-up">
         <div className="flex items-center justify-between flex-wrap gap-2 mb-1">

@@ -136,16 +136,30 @@ export const ISLAMIC_EVENTS_DATA = [
   },
 ];
 
+// In-memory memoization cache for ultra-fast O(1) date computations
+const hijriDateCache = new Map();
+let precomputedEventsIndex = null;
+let lastIndexedDayOffset = null;
+
 export const islamicCalendarService = {
   /**
    * Get Hijri Civil date object for a given Gregorian date
-   * Uses Islamic Civil calendar algorithm (en-u-ca-islamic-civil)
+   * Uses Islamic Civil calendar algorithm (en-u-ca-islamic-civil) with O(1) caching
    * @param {Date} [date=new Date()]
    * @param {number} [dayOffset=0] - Moon sighting offset (+1, 0, -1)
    */
   getHijriDate(date = new Date(), dayOffset = 0) {
+    const y = date.getFullYear();
+    const m = date.getMonth();
+    const d = date.getDate();
+    const cacheKey = `${y}-${m}-${d}-${dayOffset}`;
+
+    if (hijriDateCache.has(cacheKey)) {
+      return hijriDateCache.get(cacheKey);
+    }
+
     try {
-      const adjustedDate = new Date(date);
+      const adjustedDate = new Date(y, m, d);
       if (dayOffset !== 0) {
         adjustedDate.setDate(adjustedDate.getDate() + dayOffset);
       }
@@ -172,7 +186,7 @@ export const islamicCalendarService = {
 
       const monthName = HIJRI_MONTHS[monthIndex] || `Month ${monthIndex + 1}`;
 
-      return {
+      const res = {
         day,
         monthIndex,
         monthName,
@@ -182,9 +196,12 @@ export const islamicCalendarService = {
         shortFormatted: `${day} ${monthName}`,
         fullIslamicMonth: monthName,
       };
+
+      hijriDateCache.set(cacheKey, res);
+      return res;
     } catch (e) {
       console.warn("Error calculating Islamic Civil date:", e);
-      return {
+      const fallback = {
         day: 1,
         monthIndex: 0,
         monthName: "Muharram",
@@ -194,49 +211,56 @@ export const islamicCalendarService = {
         shortFormatted: `1 Muharram`,
         fullIslamicMonth: "Muharram",
       };
+      hijriDateCache.set(cacheKey, fallback);
+      return fallback;
     }
   },
 
   /**
-   * Find corresponding Gregorian dates for a given Hijri month and day
-   * Searches a multi-year window (past 1 year and future 2 years)
+   * Precomputes a single-pass 3-year lookup index for instant O(1) event retrieval
    */
-  findGregorianDatesForHijriAcrossYears(targetMonthIndex, targetDay, baseDate = new Date(), dayOffset = 0) {
-    const dates = [];
-    const startSearch = new Date(baseDate);
-    startSearch.setDate(startSearch.getDate() - 365); // look back 1 year
-
-    for (let i = 0; i < 1100; i++) {
-      const checkDate = new Date(startSearch);
-      checkDate.setDate(startSearch.getDate() + i);
-      const h = this.getHijriDate(checkDate, dayOffset);
-
-      if (h.monthIndex === targetMonthIndex && h.day === targetDay) {
-        dates.push({
-          gregorianDate: checkDate,
-          hijriYear: h.year,
-          hijriMonth: h.monthName,
-          hijriDay: h.day,
-        });
-      }
+  _ensurePrecomputedIndex(dayOffset = 0) {
+    if (precomputedEventsIndex && lastIndexedDayOffset === dayOffset) {
+      return precomputedEventsIndex;
     }
-    return dates;
+
+    const index = new Map(); // Key: "monthIndex-day" => Array<{ gregorianDate, hijriYear, hijriMonth, hijriDay }>
+    const today = new Date();
+    const startDate = new Date(today.getFullYear() - 1, today.getMonth(), 1);
+
+    // Scan across 3 years (1100 days) in a single ultra-fast pass
+    for (let i = 0; i < 1100; i++) {
+      const checkDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
+      const h = this.getHijriDate(checkDate, dayOffset);
+      const key = `${h.monthIndex}-${h.day}`;
+
+      if (!index.has(key)) {
+        index.set(key, []);
+      }
+      index.get(key).push({
+        gregorianDate: checkDate,
+        hijriYear: h.year,
+        hijriMonth: h.monthName,
+        hijriDay: h.day,
+      });
+    }
+
+    precomputedEventsIndex = index;
+    lastIndexedDayOffset = dayOffset;
+    return index;
   },
 
   /**
-   * Get all past, current, and future Islamic events across 3-year span
+   * Get all past, current, and future Islamic events across 3-year span (Instant O(1) index)
    */
   getAllIslamicEvents(baseDate = new Date(), dayOffset = 0) {
+    const index = this._ensurePrecomputedIndex(dayOffset);
     const today = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
     const list = [];
 
     for (const ev of ISLAMIC_EVENTS_DATA) {
-      const occurrences = this.findGregorianDatesForHijriAcrossYears(
-        ev.hijriMonth - 1,
-        ev.hijriDay,
-        baseDate,
-        dayOffset
-      );
+      const key = `${ev.hijriMonth - 1}-${ev.hijriDay}`;
+      const occurrences = index.get(key) || [];
 
       for (const occ of occurrences) {
         const diffDays = Math.ceil((occ.gregorianDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
@@ -334,7 +358,7 @@ export const islamicCalendarService = {
   /**
    * Get days matrix for a given Gregorian month/year with corresponding Hijri Civil dates
    */
-  getMonthCalendarGrid(year, monthIndex, mosqueEvents = [], dayOffset = 0) {
+  getMonthCalendarGrid(year, monthIndex, mosqueEvents = [], dayOffset = 0, selectedDate = null) {
     const firstDayOfMonth = new Date(year, monthIndex, 1);
     const lastDayOfMonth = new Date(year, monthIndex + 1, 0);
     const totalDays = lastDayOfMonth.getDate();
@@ -392,10 +416,19 @@ export const islamicCalendarService = {
     const uniqueMonths = [...new Set(validDays.map((d) => d.hijriMonth))];
     const uniqueYears = [...new Set(validDays.map((d) => d.hijriYear))];
 
+    // Active Islamic month for current selected date or middle of month
+    const activeDate = selectedDate && selectedDate.getMonth() === monthIndex
+      ? selectedDate
+      : new Date(year, monthIndex, Math.min(15, totalDays));
+    const activeHijri = this.getHijriDate(activeDate, dayOffset);
+
     return {
       year,
       monthIndex,
       days,
+      activeHijriMonthName: activeHijri.monthName,
+      activeHijriYear: activeHijri.year,
+      activeHijriDateStr: activeHijri.formatted,
       hijriSpanTitle: `${uniqueMonths.join(" – ")} (${uniqueYears.join("/")} AH)`,
     };
   },
