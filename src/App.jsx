@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider }    from "./contexts/AuthContext";
 import { ConfirmProvider } from "./contexts/ConfirmContext";
@@ -36,6 +36,15 @@ function UserPage({ page: Page }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    const splash = document.getElementById("app-splash-screen");
+    if (!splash) return;
+    const timer = setTimeout(() => {
+      splash.classList.add("splash-fade-out");
+      setTimeout(() => splash.remove(), 450);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <AuthProvider>
       <ConfirmProvider>

@@ -200,17 +200,17 @@ export default function AppShell({ children }) {
         className="lg:hidden fixed top-0 inset-x-0 z-40 bg-glass border-b border-slate-100 shadow-sm"
         style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
       >
-        <div className="flex items-center justify-between h-14">
+        <div className="flex items-center justify-between h-14 px-3 sm:px-4">
           {/* Left: hamburger + brand */}
-          <div className="flex items-center gap-1 min-w-0">
+          <div className="flex items-center gap-2 min-w-0">
             <button
               onClick={() => setDrawerOpen(true)}
               aria-label="Open menu"
-              className="p-2 rounded-xl text-slate-500 hover:bg-slate-100 active:scale-95 transition-all flex-shrink-0"
+              className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 active:scale-95 transition-all flex-shrink-0"
             >
               <Icon name="menu" size={24} />
             </button>
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center flex-shrink-0 shadow-sm shadow-emerald-700/20">
               <Icon name="mosque" size={16} filled style={{ color: "white" }} />
             </div>
             <span className="font-bold text-slate-800 text-sm truncate">
@@ -224,34 +224,38 @@ export default function AppShell({ children }) {
           </div>
 
           {/* Right: notifications + avatar / sign-in */}
-          <div className="flex items-center gap-1 flex-shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             {currentUser && (
               <button
                 onClick={() => navigate("/notifications")}
-                className="p-1.5 rounded-xl text-slate-500 hover:bg-slate-100 relative"
+                aria-label="Notifications"
+                className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 hover:text-emerald-700 active:scale-95 transition-all relative"
               >
-                <Icon name="notifications" size={20} />
+                <Icon name="notifications" size={22} />
               </button>
             )}
 
             {currentUser ? (
-              avatarUrl ? (
-                <img
-                  src={avatarUrl}
-                  alt="Profile"
-                  className="w-8 h-8 rounded-full object-cover border-2 border-emerald-200 cursor-pointer bg-emerald-900 shadow-sm"
-                  onClick={() => navigate("/profile")}
-                  title="My Profile"
-                />
-              ) : (
-                <div
-                  className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 border-2 border-emerald-200 cursor-pointer flex items-center justify-center font-bold text-xs shadow-sm"
-                  onClick={() => navigate("/profile")}
-                  title="My Profile"
-                >
-                  {userInitials}
-                </div>
-              )
+              <button
+                onClick={() => navigate("/profile")}
+                aria-label="My Profile"
+                className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center ring-2 ring-emerald-500/30 hover:ring-emerald-500 active:scale-95 transition-all cursor-pointer shadow-sm bg-emerald-800 flex-shrink-0"
+                title="My Profile"
+              >
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div
+                    className="w-full h-full bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center font-bold text-xs"
+                  >
+                    {userInitials}
+                  </div>
+                )}
+              </button>
             ) : (
               <button
                 onClick={() => openAuthModal("signin")}

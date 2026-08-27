@@ -4,6 +4,20 @@ All notable changes to the Mosque Hub project are documented in this file.
 
 ---
 
+## [1.0.5] — Build 5 (2026-08-28)
+
+### ✨ Continuous Islamic Loading Splash Screen
+- **Zero-Flash Top-Level Architecture**: Moved splash screen outside `#root` as a continuous top-level overlay with deep emerald radial gradient (`#064e3b` to `#022c22`), eliminating blank white screens on app launch.
+- **Unbroken 3-Second Animation**: Smooth continuous SVG crescent/dome animation, rotating orbital light ring, Arabic Bismillah calligraphy, and animated progress track with a seamless 0.4s GPU fade-out transition.
+- **Eliminated Gap / Green Pause**: Resolved DOM unmount flickering by initializing React components in the background behind the active splash overlay.
+
+### 📐 Top Header & Avatar Alignment Fixes
+- **Balanced Horizontal Padding**: Added `px-3 sm:px-4` to the top mobile header bar, eliminating edge clipping on the user avatar.
+- **Uniform Action Sizing**: Encased both the Notification Bell and Profile Avatar in matched `w-9 h-9 flex items-center justify-center` containers for vertical centering and touch targets.
+- **Visual Polish**: Added an emerald focus ring (`ring-2 ring-emerald-500/30 hover:ring-emerald-500`) to the avatar button.
+
+---
+
 ## [1.0.4] — Build 4 (2026-08-28)
 
 ### 🚀 Page Scrolling & Touch Momentum Fixes

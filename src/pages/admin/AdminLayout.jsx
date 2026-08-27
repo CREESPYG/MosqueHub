@@ -25,16 +25,14 @@ const ADMIN_SLOTS = [
   { to: "/admin/finances", iconOutline: "account_balance_wallet", iconFilled: "account_balance_wallet", label: "Finances"              },
 ];
 
+import IslamicLoadingScreen from "../../components/ui/IslamicLoadingScreen";
+
 export default function AdminLayout() {
   const { currentUser, isAdmin, isSuperAdmin, loading, signOut } = useAuth();
   const { confirm } = useConfirm();
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-emerald-600 text-sm font-medium animate-pulse">Authenticating…</div>
-      </div>
-    );
+    return <IslamicLoadingScreen message="Authenticating admin session..." />;
   }
 
   if (!currentUser || !isAdmin) {
