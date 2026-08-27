@@ -388,15 +388,9 @@ export default function AppShell({ children }) {
           MAIN CONTENT
       ════════════════════════════════════ */}
       <main
-        className="flex-1 lg:ml-64 min-h-screen overflow-x-clip"
-        style={{
-          paddingTop: "calc(3.5rem + env(safe-area-inset-top, 0px))",    /* mobile header + notch */
-          paddingBottom: "calc(4.5rem + env(safe-area-inset-bottom, 0px))",
-        }}
+        className="flex-1 lg:ml-64 w-full min-h-screen pt-[calc(3.75rem+env(safe-area-inset-top,0px))] pb-[calc(6.5rem+env(safe-area-inset-bottom,0px))] lg:pt-0 lg:pb-8"
       >
-        {/* Desktop: no top padding needed */}
-        <style>{`@media (min-width: 1024px) { main { padding-top: 0 !important; padding-bottom: 0 !important; } }`}</style>
-        <div className="animate-fade-in">{children}</div>
+        <div className="w-full animate-fade-in">{children}</div>
       </main>
 
       {/* ════════════════════════════════════

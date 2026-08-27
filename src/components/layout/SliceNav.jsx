@@ -189,7 +189,7 @@ export default function SliceBottomNav({ slots, chips, onSignOut }) {
   return (
     <>
       <nav
-        className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-glass border-t border-slate-100"
+        className="lg:hidden fixed inset-x-0 bottom-0 z-40 bg-glass border-t border-slate-100"
         style={{
           paddingBottom: "env(safe-area-inset-bottom, 0px)",
           boxShadow: "0 -1px 0 rgba(0,0,0,0.06), 0 -4px 12px rgba(0,0,0,0.06)",
