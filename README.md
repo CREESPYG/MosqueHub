@@ -68,10 +68,12 @@ Deploy the `Web-Build/` folder directly to any static hosting provider:
 
 ---
 
-## 📱 Android APK Installation
+## 📱 Android APK Installation & Download
 
-Download and install the latest release from the `And APK/` folder:
-- **[MosqueHub-v1.0.3-build3.apk](file:///c:/Users/aarif/Desktop/Mosque%20Hub%20App/And%20APK/MosqueHub-v1.0.3-build3.apk)**
+Download and install the latest release directly from GitHub Releases:
+- **Direct Download (GitHub Releases)**: **[Download MosqueHub-v1.0.3-build3.apk](https://github.com/CREESPYG/MosqueHub/releases/download/v1.0.3/MosqueHub-v1.0.3-build3.apk)**
+- **Release Page**: **[Mosque Hub v1.0.3 Release Notes & Assets](https://github.com/CREESPYG/MosqueHub/releases/tag/v1.0.3)**
+- **Local File**: `And APK/MosqueHub-v1.0.3-build3.apk`
 
 ---
 
